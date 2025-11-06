@@ -15,7 +15,7 @@ RouterEval.convert_data_to_eval(dataset, model_pool)
 ### Eval Data Format
 因RouteEval的評估方式目前只取用model、question_prompt、similar_point
 
-`routereval_data.pkl` 結構如下：
+`routereval_data.pkl` 範例結構如下：
 
 ```json
 {
