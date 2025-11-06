@@ -1,5 +1,5 @@
 # RouterEval
-
+### Usage
 ```python
 from LLMRouter import datasets
 import RouterEval 
@@ -11,7 +11,7 @@ dataset = datasets.load_dataset(
 )
 RouterEval.convert_data_to_eval(dataset, model_pool)
 ```
-
+輸出routereval_data.pkl供RouterEval使用  
 ### Eval Data Format
 因RouteEval的評估方式目前只取用model、question_prompt、similar_point
 
