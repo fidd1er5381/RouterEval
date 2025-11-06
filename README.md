@@ -9,7 +9,6 @@ dataset = datasets.load_dataset(
     model_pool,
     ["similar"]
 )
-
 RouterEval.convert_data_to_eval(dataset, model_pool)
 ```
 
