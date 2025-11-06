@@ -100,6 +100,7 @@ def convert_data_to_eval(new_dataset: list, model_pool: list):
 
 if __name__ == "__main__":
     from LLMRouter import datasets
+    
     model_pool = ["mistralai/Mixtral-8x7B-Instruct-v0.1" ,"gpt-4-1106-preview"]
     dataset = datasets.load_dataset(["gsm8k"], model_pool , ["similar"])
 
