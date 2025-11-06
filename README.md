@@ -1,7 +1,8 @@
 # RouterEval
 
 ### Eval Data Format
-Eval Data Format因RouteEval的評估方式目前只取用similar point
+因RouteEval的評估方式目前只取用model、question_prompt、similar_point
+
 `routereval_data.pkl` 結構如下：
 
 ```json
