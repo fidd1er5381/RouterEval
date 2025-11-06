@@ -1,4 +1,16 @@
 # RouterEval
+```python
+from LLMRouter import datasets
+import RouterEval 
+model_pool = ["mistralai/Mixtral-8x7B-Instruct-v0.1" ,"gpt-4-1106-preview"]
+dataset = datasets.load_dataset(
+    ["gsm8k"], 
+    model_pool,
+    ["similar"]
+)
+
+RouterEval.convert_data_to_eval(dataset, model_pool)
+
 
 ### Eval Data Format
 因RouteEval的評估方式目前只取用model、question_prompt、similar_point
