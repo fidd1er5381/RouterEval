@@ -2,14 +2,14 @@
 ### Usage
 ```python
 from LLMRouter import datasets
-import RouterEval 
+import data_process  
 model_pool = ["mistralai/Mixtral-8x7B-Instruct-v0.1" ,"gpt-4-1106-preview"]
 dataset = datasets.load_dataset(
     ["gsm8k"], 
     model_pool,
     ["similar"]
 )
-RouterEval.convert_data_to_eval(dataset, model_pool)
+data_process.convert_data_to_eval(dataset, model_pool)
 ```
 儲存為routereval_data.pkl供RouterEval使用  
 ### Eval Data Format
