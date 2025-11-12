@@ -76,6 +76,9 @@ RouterEval.convert_data_to_eval(dataset, model_pool)
 }
 ```
 ### Output example
+```bash
+python test_new_data.py
+```
 使用RouterEval的RoBERTa-MLC  
 vr比較基準為score 0.9(因沒有基準隨便設的)  
 ```bash
