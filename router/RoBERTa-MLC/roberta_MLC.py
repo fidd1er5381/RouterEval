@@ -24,7 +24,6 @@ import os
 
 def get_argparser():
     parser = argparse.ArgumentParser()
-    # ... (保持不變) ...
     parser.add_argument('--seed', default=43, type=int, help='randomseed')
     parser.add_argument('--model_path', default='roberta-base', type=str, help='path to model')
     parser.add_argument('--data',default='llm_performance_prompt.npz', type=str, metavar='PATH', help='path to data')
@@ -51,7 +50,6 @@ def dataset_perpare(args):
 
 def train(args,train_dataset,test_dataset,train_score,test_score,model_number, test_tokens, test_time):
     model_name_or_path = args.model_path
-    # ... (config, tokenizer, model, training_args 保持不變) ...
     config = AutoConfig.from_pretrained(
             model_name_or_path,
             num_labels=model_number,
@@ -83,7 +81,6 @@ def train(args,train_dataset,test_dataset,train_score,test_score,model_number, t
         weight_decay=0.01,              
         logging_strategy= 'no',
     )
-    # ... (is_regression, is_multi_label, map, trainer... 保持不變) ...
     is_regression = False
     is_multi_label =True
     train_dataset = train_dataset.map(
@@ -122,7 +119,6 @@ def train(args,train_dataset,test_dataset,train_score,test_score,model_number, t
     overall_accuracy = np.mean(test_score[np.arange(test_score.shape[0]), predicted_llm_indices])
     
     # 'Vb' (Variance of Best)
-    # 讓 Vb 暫時等於 'router acc / bsm acc'
     vb_val = overall_accuracy / np.max(np.mean(test_score, axis=0))
 
     # 'Ep' (Entropy)
@@ -134,15 +130,13 @@ def train(args,train_dataset,test_dataset,train_score,test_score,model_number, t
     avg_time = 0.0
     
     if test_tokens is not None and test_time is not None:
-        # 確保維度正確 (num_samples, num_models)
         if test_tokens.shape[0] == len(predicted_llm_indices) and test_time.shape[0] == len(predicted_llm_indices):
             selected_tokens = test_tokens[np.arange(test_tokens.shape[0]), predicted_llm_indices]
             avg_tokens = np.mean(selected_tokens)
             
             selected_time = test_time[np.arange(test_time.shape[0]), predicted_llm_indices]
             avg_time = np.mean(selected_time)
-        else:
-            print("警告: 成本數據維度與預測索引不匹配。")
+
     
     print(f"METRIC_MU: {overall_accuracy}")
     print(f"METRIC_VB: {vb_val}") # Vb (來自子腳本的 Vr)
@@ -158,10 +152,7 @@ def main():
     np.random.seed(random_state)
     torch.manual_seed(random_state)
     
-    # --- 💎 修改: 接收成本數據 ---
     train_dataset,test_dataset,train_score,test_score,model_number, test_tokens, test_time = dataset_perpare(args)
-    
-    # --- 💎 修改: 傳遞成本數據 ---
     train(args,train_dataset,test_dataset,train_score,test_score,model_number, test_tokens, test_time)
 
 if __name__ == '__main__':
