@@ -2,18 +2,18 @@
 ### Usage
 ```python
 from LLMRouter import datasets
-import RouterEval 
+import data_process  
 model_pool = ["mistralai/Mixtral-8x7B-Instruct-v0.1" ,"gpt-4-1106-preview"]
 dataset = datasets.load_dataset(
     ["gsm8k"], 
     model_pool,
     ["similar"]
 )
-RouterEval.convert_data_to_eval(dataset, model_pool)
+data_process.convert_data_to_eval(dataset, model_pool)
 ```
 儲存為routereval_data.pkl供RouterEval使用  
 ### Eval Data Format
-因RouteEval的評估方式目前只取用model、question_prompt、similar_point
+因RouteEval的評估方式目前取用model、question_prompt、similar_point、total_token、response_time
 
 `routereval_data.pkl` 範例結構如下：
 
@@ -76,6 +76,9 @@ RouterEval.convert_data_to_eval(dataset, model_pool)
 }
 ```
 ### Output example
+```bash
+python test_new_data.py
+```
 使用RouterEval的RoBERTa-MLC  
 vr比較基準為score 0.9(因沒有基準隨便設的)  
 ```bash
