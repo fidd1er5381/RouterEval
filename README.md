@@ -78,7 +78,7 @@ RouterEval.convert_data_to_eval(dataset, model_pool)
 ### Result
 使用RouterEval的RoBERTa-MLC  
 vr比較基準為score 0.9(因沒有基準隨便設的)  
-
+```bash
 Dataset: router_extended_data_20, Strategy: roberta_MLC
 Router -> mu: 0.9333,  Vr: 1.0370,  Vb: 1.0000,  Ep: -0.0000,  Avg_Tokens: 200.00,  Avg_Latency: 1.5054
 ---------------------------------------------------------------------------
@@ -91,3 +91,4 @@ Router (roberta_MLC)                                         | 0.9333       | 20
 Vr (Normalized Acc): 1.0370
 Vb (Sub-Vr/Bias): 1.0000
 Ep (Entropy): 0.0000
+```
