@@ -5,9 +5,9 @@ import numpy as np
 import subprocess
 
 
-datasets = ['router_extended_data'] 
+datasets = ['gsm8k_dataset']  # Changed from 'router_extended_data' to 'gsm8k_dataset'
 to_handle_datasets = datasets
-baseline = 'roberta_MLC'
+baseline = 'knn'
 
 if baseline == 'knn':
     command = 'python router/PRKnn-knn/knn.py --seed 0 --knearest 5 --data data/tmp_perf.npz'
@@ -24,6 +24,7 @@ elif baseline == 'mlp':
 elif baseline == 'roberta_cluster':
     command = 'python router/C-RoBERTa-cluster/cluster.py --seed 0 --numcluster 3 --data data/tmp_perf.npz'
 elif baseline == 'roberta_MLC':
+    print("run roberta_MLC")
     command = 'python router/RoBERTa-MLC/roberta_MLC.py --seed 0 --model_path roberta-base --data data/tmp_perf.npz'
 elif baseline == 'katanemo_MLC':
     command = 'python router/Katanemo-MLC/katanemo_MLC.py --seed 0 --data data/tmp_perf.npz'
