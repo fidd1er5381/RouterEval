@@ -17,21 +17,18 @@ elif baseline == 'random':
     command = 'python router/R_o/r_o_router.py --p 0.0 --data data/tmp_perf.npz'
 elif baseline == 'r_o_0.5':
     command = 'python router/R_o/r_o_router.py --p 0.5 --data data/tmp_perf.npz'
-elif baseline == 'linear':
-    command = 'python router/MLPR_LinearR/train.py --datadir data/tmp_perf.npz --lr 0.01 --model linear --epoch 10 --train-batch 1 --checkpoint router/MLPR_LinearR/linear'
-elif baseline == 'mlp':
-    command = 'python router/MLPR_LinearR/train.py --datadir data/tmp_perf.npz --lr 0.0001 --model FNN --epoch 100 --hidden_size 256 --train-batch 1 --checkpoint router/MLPR_LinearR/MLPR'
 elif baseline == 'roberta_cluster':
     command = 'python router/C-RoBERTa-cluster/cluster.py --seed 0 --numcluster 3 --data data/tmp_perf.npz'
 elif baseline == 'roberta_MLC':
     print("run roberta_MLC")
     command = 'python router/RoBERTa-MLC/roberta_MLC.py --seed 0 --model_path roberta-base --data data/tmp_perf.npz'
-elif baseline == 'katanemo_MLC':
-    command = 'python router/Katanemo-MLC/katanemo_MLC.py --seed 0 --data data/tmp_perf.npz'
-elif baseline == 'katanemo':
-    command = 'python router/Katanemo_ArchRouter/katanemo_router.py --data data/tmp_perf.npz'
 else:
     raise RuntimeError("No such baseline")
+# elif baseline == 'linear':
+#     command = 'python router/MLPR_LinearR/train.py --datadir data/tmp_perf.npz --lr 0.01 --model linear --epoch 10 --train-batch 1 --checkpoint router/MLPR_LinearR/linear'
+# elif baseline == 'mlp':
+#     command = 'python router/MLPR_LinearR/train.py --datadir data/tmp_perf.npz --lr 0.0001 --model FNN --epoch 100 --hidden_size 256 --train-batch 1 --checkpoint router/MLPR_LinearR/MLPR'
+
 
 #acc_ref_dict = {'router_extended_data':0.9}
 
@@ -70,30 +67,13 @@ for to_handle in to_handle_datasets:
     avg_latency_list = []
     
     for i in range(1):
-        if baseline == 'roberta_MLC':
-            model_name_list = router_dataset['model']
-            
-            model_config_list_of_dicts = []
-            for name in model_name_list:
-                model_config_list_of_dicts.append({
-                    "name": name,
-                    "description": f"This is an LLM candidate named {name}."
-                })
-            
-            np.savez('data/tmp_perf.npz', train_prompt=router_dataset['prompt']['train_prompt'],
-                                         val_prompt=router_dataset['prompt']['val_prompt'],
-                                         test_prompt=router_dataset['prompt']['test_prompt'],
-                                         train_score=train_score, val_score=val_score, test_score=test_score,
-                                         model_config=model_config_list_of_dicts,
-                                         test_tokens=test_tokens,
-                                         test_time=test_time)
-        else:
-            np.savez('data/tmp_perf.npz', train_embed=router_dataset['embedding']['train_embed'],
-                                         val_embed=router_dataset['embedding']['val_embed'],
-                                         test_embed=router_dataset['embedding']['test_embed'],
-                                         train_score=train_score, val_score=val_score, test_score=test_score,
-                                         test_tokens=test_tokens,
-                                         test_time=test_time)
+        np.savez('data/tmp_perf.npz', train_prompt=router_dataset['prompt']['train_prompt'],
+                                     val_prompt=router_dataset['prompt']['val_prompt'],
+                                     test_prompt=router_dataset['prompt']['test_prompt'],
+                                     train_score=train_score, val_score=val_score, test_score=test_score,
+                                     test_tokens=test_tokens,
+                                     test_time=test_time)
+
 
         try:
             result = subprocess.run(
